@@ -12,8 +12,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', system-ui, sans-serif; }
         .glass { background: rgba(22, 27, 34, 0.97); backdrop-filter: blur(16px); }
-        .result-item:hover { transform: translateX(8px); background-color: rgba(88, 166, 255, 0.1); }
-        pre { background: #0d1117; padding: 20px; border-radius: 12px; border: 1px solid #30363d; overflow-x: auto; font-family: ui-monospace, monospace; }
+        .result-item { transition: all 0.3s ease; }
+        .result-item:hover { transform: translateX(8px); background-color: rgba(88, 166, 255, 0.12); }
     </style>
 </head>
 <body class="bg-[#0d1117] text-[#c9d1d9] min-h-screen">
@@ -21,7 +21,7 @@
     <!-- HEADER -->
     <header class="fixed top-0 left-0 right-0 bg-[#161b22] border-b border-[#30363d] z-50">
         <div class="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+            <a href="index.html" class="flex items-center gap-3 hover:opacity-80">
                 <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white font-bold text-2xl">N</div>
                 <div>
                     <h1 class="text-2xl font-bold tracking-tighter">NetAdmin Toolkit</h1>
@@ -29,12 +29,9 @@
                 </div>
             </a>
             <div class="flex items-center gap-5">
-                <button onclick="toggleDarkMode()" id="theme-toggle" class="p-3 rounded-2xl hover:bg-[#30363d] transition-all text-2xl">
+                <button onclick="toggleDarkMode()" id="theme-toggle" class="p-3 rounded-2xl hover:bg-[#30363d] text-2xl">
                     <i class="fa-solid fa-moon"></i>
                 </button>
-                <a href="https://github.com/ismailbouzarhar70-sys/NetAdmin-Toolkit" target="_blank" class="text-3xl hover:text-white">
-                    <i class="fa-brands fa-github"></i>
-                </a>
             </div>
         </div>
     </header>
@@ -44,63 +41,53 @@
         <aside class="w-72 bg-[#161b22] border-r border-[#30363d] h-[calc(100vh-6rem)] fixed hidden lg:block overflow-y-auto">
             <div class="p-8">
                 <nav class="space-y-2">
-                    <a href="index.html" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
+                    <a href="index.html" class="flex items-center gap-3 px-6 py-4 text-base font-medium hover:bg-[#21262d] rounded-xl">
                         <i data-lucide="home" class="w-6 h-6"></i> Accueil
                     </a>
-                    <a href="calculateur.html?mode=ip" class="nav-link active flex items-center gap-3 px-6 py-4 text-base font-medium">
+                    <a href="calculateur.html?mode=ip" class="active flex items-center gap-3 px-6 py-4 text-base font-medium bg-blue-600 text-white rounded-2xl">
                         <i data-lucide="network" class="w-6 h-6"></i> IP Manager
                     </a>
-                    <a href="calculateur.html?mode=cisco" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
+                    <a href="calculateur.html?mode=cisco" class="flex items-center gap-3 px-6 py-4 text-base font-medium hover:bg-[#21262d] rounded-xl">
                         <i data-lucide="cpu" class="w-6 h-6"></i> Cisco Engine
                     </a>
-                    <a href="cours.html" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
+                    <a href="cours.html" class="flex items-center gap-3 px-6 py-4 text-base font-medium hover:bg-[#21262d] rounded-xl">
                         <i data-lucide="book-open" class="w-6 h-6"></i> IT Academy
                     </a>
-                    <a href="tools.html" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
+                    <a href="tools.html" class="flex items-center gap-3 px-6 py-4 text-base font-medium hover:bg-[#21262d] rounded-xl">
                         <i data-lucide="toolbox" class="w-6 h-6"></i> Admin Tools
                     </a>
                 </nav>
             </div>
         </aside>
 
-        <!-- MAIN -->
+        <!-- MAIN CONTENT -->
         <main class="flex-1 lg:ml-72 p-8 lg:p-12">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-4xl font-bold mb-2">IP Manager</h2>
-                <p class="text-gray-400 text-lg mb-10">Calculateur IPv4 & IPv6 • Subnetting</p>
+                <p class="text-gray-400 mb-10">Calculateur IPv4 • Subnetting</p>
 
                 <div class="glass border border-[#30363d] rounded-3xl p-10">
                     <div class="mb-8">
                         <label class="block text-sm font-medium text-gray-400 mb-3">Version du Protocole</label>
-                        <div class="flex gap-3">
-                            <button onclick="switchVersion('v4')" id="btn-v4" 
-                                    class="flex-1 py-4 rounded-2xl font-semibold bg-blue-600 text-white">IPv4</button>
-                            <button onclick="switchVersion('v6')" id="btn-v6" 
-                                    class="flex-1 py-4 rounded-2xl font-semibold bg-gray-700 hover:bg-gray-600">IPv6</button>
-                        </div>
+                        <button onclick="switchVersion('v4')" id="btn-v4"
+                                class="w-full py-5 rounded-2xl font-semibold text-lg bg-blue-600 text-white">IPv4</button>
                     </div>
 
-                    <div id="v4Inputs">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-400 mb-2">Adresse IP</label>
-                                <input type="text" id="ipInput" value="192.168.1.0" 
-                                       class="w-full bg-[#0d1117] border border-[#30363d] rounded-2xl px-5 py-4 text-lg focus:border-blue-500 outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-400 mb-2">Masque CIDR (/n)</label>
-                                <input type="number" id="cidrInput" value="24" min="0" max="32"
-                                       class="w-full bg-[#0d1117] border border-[#30363d] rounded-2xl px-5 py-4 text-lg focus:border-blue-500 outline-none">
-                            </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-2">Adresse IP</label>
+                            <input type="text" id="ipInput" value="192.168.1.0" 
+                                   class="w-full bg-[#0d1117] border border-[#30363d] rounded-2xl px-6 py-5 text-lg focus:border-blue-500 outline-none">
                         </div>
-                    </div>
-
-                    <div id="v6Inputs" class="hidden">
-                        <p class="text-amber-400 text-center py-8">IPv6 complet arrive bientôt...</p>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-2">Masque CIDR (/n)</label>
+                            <input type="number" id="cidrInput" value="24" min="0" max="32"
+                                   class="w-full bg-[#0d1117] border border-[#30363d] rounded-2xl px-6 py-5 text-lg focus:border-blue-500 outline-none">
+                        </div>
                     </div>
 
                     <button onclick="calculateIP()" 
-                            class="mt-10 w-full bg-blue-600 hover:bg-blue-700 py-5 rounded-2xl font-semibold text-lg transition-all active:scale-95">
+                            class="mt-10 w-full bg-blue-600 hover:bg-blue-700 py-6 rounded-2xl font-semibold text-xl transition-all">
                         Calculer les détails
                     </button>
                 </div>
@@ -108,7 +95,9 @@
                 <!-- RÉSULTATS -->
                 <div id="resultSection" class="hidden mt-10">
                     <div class="glass border border-[#30363d] rounded-3xl p-10">
-                        <h3 class="text-2xl font-semibold mb-8">Résultats du Calcul</h3>
+                        <h3 class="text-2xl font-semibold mb-8 flex items-center gap-3">
+                            Résultats du Calcul
+                        </h3>
                         <div class="space-y-4" id="results-container"></div>
                     </div>
                 </div>
@@ -131,63 +120,51 @@
             }
         }
 
-        function switchVersion(v) {
-            document.getElementById('v4Inputs').classList.toggle('hidden', v !== 'v4');
-            document.getElementById('v6Inputs').classList.toggle('hidden', v !== 'v6');
-            document.getElementById('btn-v4').classList.toggle('bg-blue-600', v === 'v4');
-            document.getElementById('btn-v6').classList.toggle('bg-blue-600', v === 'v6');
-        }
-
-        // Fonction de calcul IPv4 simple (intégrée)
         function calculateIP() {
             const ip = document.getElementById('ipInput').value.trim();
             const cidr = parseInt(document.getElementById('cidrInput').value);
 
-            if (!ip || isNaN(cidr) || cidr < 0 || cidr > 32) {
-                alert("Veuillez entrer une adresse IP valide et un CIDR entre 0 et 32.");
+            if (!ip || isNaN(cidr)) {
+                alert("Veuillez remplir l'adresse IP et le masque CIDR.");
                 return;
             }
 
-            // Calcul simple IPv4
             const parts = ip.split('.').map(Number);
             if (parts.length !== 4 || parts.some(p => isNaN(p) || p < 0 || p > 255)) {
                 alert("Adresse IP invalide !");
                 return;
             }
 
-            const mask = ~(0xFFFFFFFF >>> cidr) >>> 0;
-            const ipInt = (parts[0]<<24 | parts[1]<<16 | parts[2]<<8 | parts[3]) >>> 0;
-            const network = (ipInt & mask) >>> 0;
-            const broadcast = (network | ~mask) >>> 0;
+            const mask = ~((1 << (32 - cidr)) - 1);
+            const ipInt = (parts[0] << 24) | (parts[1] << 16) | (parts[2] << 8) | parts[3];
+            const network = ipInt & mask;
+            const broadcast = network | ~mask;
 
-            const networkStr = `${(network>>24)&255}.${(network>>16)&255}.${(network>>8)&255}.${network&255}`;
-            const broadcastStr = `${(broadcast>>24)&255}.${(broadcast>>16)&255}.${(broadcast>>8)&255}.${broadcast&255}`;
+            const toIP = n => `${(n>>24)&255}.${(n>>16)&255}.${(n>>8)&255}.${n&255}`;
 
-            const firstHost = network + 1;
-            const lastHost = broadcast - 1;
-            const firstStr = `${(firstHost>>24)&255}.${(firstHost>>16)&255}.${(firstHost>>8)&255}.${firstHost&255}`;
-            const lastStr = `${(lastHost>>24)&255}.${(lastHost>>16)&255}.${(lastHost>>8)&255}.${lastHost&255}`;
-
-            const hosts = Math.pow(2, 32 - cidr) - 2;
-
-            // Affichage résultats
-            const container = document.getElementById('results-container');
-            container.innerHTML = `
-                <div class="result-item glass border border-[#30363d] rounded-2xl p-5 flex justify-between"><strong>ID Réseau :</strong> <span>${networkStr}/${cidr}</span></div>
-                <div class="result-item glass border border-[#30363d] rounded-2xl p-5 flex justify-between"><strong>Masque :</strong> <span>/${cidr}</span></div>
-                <div class="result-item glass border border-[#30363d] rounded-2xl p-5 flex justify-between"><strong>Première IP utilisable :</strong> <span>${firstStr}</span></div>
-                <div class="result-item glass border border-[#30363d] rounded-2xl p-5 flex justify-between"><strong>Dernière IP utilisable :</strong> <span>${lastStr}</span></div>
-                <div class="result-item glass border border-[#30363d] rounded-2xl p-5 flex justify-between"><strong>Broadcast :</strong> <span>${broadcastStr}</span></div>
-                <div class="result-item glass border border-[#30363d] rounded-2xl p-5 flex justify-between"><strong>Nombre d'hôtes :</strong> <span>${hosts}</span></div>
+            const resultHTML = `
+                <div class="result-item glass border border-[#30363d] rounded-2xl p-6 flex justify-between items-center">
+                    <strong>ID Réseau</strong> <span class="font-mono">${toIP(network)}/${cidr}</span>
+                </div>
+                <div class="result-item glass border border-[#30363d] rounded-2xl p-6 flex justify-between items-center">
+                    <strong>Première IP utilisable</strong> <span class="font-mono">${toIP(network + 1)}</span>
+                </div>
+                <div class="result-item glass border border-[#30363d] rounded-2xl p-6 flex justify-between items-center">
+                    <strong>Dernière IP utilisable</strong> <span class="font-mono">${toIP(broadcast - 1)}</span>
+                </div>
+                <div class="result-item glass border border-[#30363d] rounded-2xl p-6 flex justify-between items-center">
+                    <strong>Broadcast</strong> <span class="font-mono">${toIP(broadcast)}</span>
+                </div>
+                <div class="result-item glass border border-[#30363d] rounded-2xl p-6 flex justify-between items-center">
+                    <strong>Nombre d'hôtes</strong> <span class="font-mono">${(1 << (32 - cidr)) - 2}</span>
+                </div>
             `;
 
+            document.getElementById('results-container').innerHTML = resultHTML;
             document.getElementById('resultSection').classList.remove('hidden');
-            lucide.createIcons();
         }
 
-        window.onload = () => {
-            lucide.createIcons();
-        };
+        window.onload = () => lucide.createIcons();
     </script>
 </body>
 </html>
