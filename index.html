@@ -1,58 +1,196 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NetAdmin Toolkit - Portail</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <title>NetAdmin Toolkit v2.6</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        
+        .glass {
+            background: rgba(22, 27, 34, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        
+        .mode-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .mode-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2), 0 8px 10px -6px rgb(0 0 0 / 0.2);
+        }
+        
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link.active {
+            background-color: #58a6ff;
+            color: white;
+            border-radius: 9999px;
+        }
+    </style>
 </head>
-<body>
-    <div class="container hero-container">
-        <header class="main-header">
-            <div class="logo-icon"><i class="fas fa-server"></i></div>
-            <h1>NetAdmin <span>Toolkit</span></h1>
-            <div class="badge">v2.5 - Engineering Suite</div>
-        </header>
+<body class="bg-[#0d1117] text-[#c9d1d9] min-h-screen">
 
-        <section class="glass-card main-hero">
-            <h2>Portail d'Administration & Apprentissage</h2>
-            <p class="subtitle">Sélectionnez un module pour commencer votre session.</p>
-
-            <div class="modes-grid">
-                <div class="mode-card">
-                    <div class="mode-icon"><i class="fas fa-calculator"></i></div>
-                    <h3>IP Manager</h3>
-                    <p>Calculateur IPv4/IPv6, masques et plages d'adresses.</p>
-                    <a href="calculateur.html?mode=ip" class="btn-mode">Ouvrir</a>
-                </div>
-
-                <div class="mode-card highlight">
-                    <div class="mode-icon"><i class="fas fa-terminal"></i></div>
-                    <h3>Cisco Engine</h3>
-                    <p>Générateur de scripts CLI pour routeurs et switchs.</p>
-                   <a href="calculateur.html?mode=cisco" class="btn-mode">Générer</a>
-                </div>
-
-                <div class="mode-card academy">
-                    <div class="mode-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <h3>IT Academy</h3>
-                    <p>Cours et fiches de révision : CCNA, Linux, et Protocoles.</p>
-                    <a href="cours.html" class="btn-mode">Réviser</a>
-                </div>
-
-                <div class="mode-card tools">
-                    <div class="mode-icon"><i class="fas fa-toolbox"></i></div>
-                    <h3>Admin Tools</h3>
-                    <p>Mémos de commandes, outils système et utilitaires.</p>
-                    <a href="tools.html" class="btn-mode">Explorer</a>
+    <!-- HEADER -->
+    <header class="fixed top-0 left-0 right-0 bg-[#161b22] border-b border-[#30363d] z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">N</div>
+                <div>
+                    <h1 class="text-2xl font-semibold tracking-tight">NetAdmin Toolkit</h1>
+                    <p class="text-xs text-gray-500 -mt-1">v2.6 • Engineering Suite</p>
                 </div>
             </div>
-        </section>
+            
+            <div class="flex items-center gap-4">
+                <button onclick="toggleDarkMode()" id="theme-toggle"
+                        class="p-2 rounded-xl hover:bg-[#30363d] transition-colors">
+                    <i class="fa-solid fa-moon text-xl"></i>
+                </button>
+                <a href="https://github.com/ismailbouzarhar70-sys/NetAdmin-Toolkit" target="_blank"
+                   class="flex items-center gap-2 text-sm hover:text-white transition-colors">
+                    <i class="fa-brands fa-github text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </header>
 
-        <footer class="simple-footer">
-            <p><i class="fas fa-code"></i> Developed for System & Network Engineering</p>
-        </footer>
+    <div class="flex pt-20">
+        <!-- SIDEBAR -->
+        <aside class="w-72 bg-[#161b22] border-r border-[#30363d] h-[calc(100vh-5rem)] fixed hidden lg:block overflow-y-auto">
+            <div class="p-6">
+                <nav class="space-y-2">
+                    <a href="index.html" class="nav-link active flex items-center gap-3 px-4 py-3 text-sm font-medium">
+                        <i data-lucide="home" class="w-5 h-5"></i>
+                        Accueil
+                    </a>
+                    <a href="calculateur.html?mode=ip" class="nav-link flex items-center gap-3 px-4 py-3 text-sm font-medium">
+                        <i data-lucide="network" class="w-5 h-5"></i>
+                        IP Manager
+                    </a>
+                    <a href="calculateur.html?mode=cisco" class="nav-link flex items-center gap-3 px-4 py-3 text-sm font-medium">
+                        <i data-lucide="cpu" class="w-5 h-5"></i>
+                        Cisco Engine
+                    </a>
+                    <a href="cours.html" class="nav-link flex items-center gap-3 px-4 py-3 text-sm font-medium">
+                        <i data-lucide="book-open" class="w-5 h-5"></i>
+                        IT Academy
+                    </a>
+                    <a href="tools.html" class="nav-link flex items-center gap-3 px-4 py-3 text-sm font-medium">
+                        <i data-lucide="toolbox" class="w-5 h-5"></i>
+                        Admin Tools
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 lg:ml-72 p-6 max-w-7xl mx-auto">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12 mt-8">
+                    <h2 class="text-5xl font-bold tracking-tight mb-3">Bienvenue dans ton Toolkit</h2>
+                    <p class="text-xl text-gray-400">Tout ce dont tu as besoin pour administrer et apprendre les réseaux.</p>
+                </div>
+
+                <!-- GRILLE DES MODULES -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="modes-grid">
+                    <!-- Les cartes seront générées par JS pour plus de flexibilité -->
+                </div>
+            </div>
+        </main>
     </div>
+
+    <script>
+        // Initialisation des icônes Lucide
+        lucide.createIcons();
+
+        // Données des modules
+        const modules = [
+            {
+                title: "IP Manager",
+                icon: "network",
+                color: "blue",
+                desc: "Calculateur IPv4 / IPv6, subnetting, VLSM",
+                link: "calculateur.html?mode=ip",
+                btnColor: "bg-blue-600 hover:bg-blue-700"
+            },
+            {
+                title: "Cisco Engine",
+                icon: "cpu",
+                color: "emerald",
+                desc: "Générateur de configurations Cisco (ACL, VLAN, OSPF...)",
+                link: "calculateur.html?mode=cisco",
+                btnColor: "bg-emerald-600 hover:bg-emerald-700"
+            },
+            {
+                title: "IT Academy",
+                icon: "book-open",
+                color: "amber",
+                desc: "Cours, fiches de révision et quizzes CCNA / Linux",
+                link: "cours.html",
+                btnColor: "bg-amber-600 hover:bg-amber-700 text-black"
+            },
+            {
+                title: "Admin Tools",
+                icon: "toolbox",
+                color: "violet",
+                desc: "Commandes, convertisseurs, outils système",
+                link: "tools.html",
+                btnColor: "bg-violet-600 hover:bg-violet-700"
+            }
+        ];
+
+        // Générer les cartes
+        function renderCards() {
+            const container = document.getElementById('modes-grid');
+            container.innerHTML = '';
+
+            modules.forEach(mod => {
+                const cardHTML = `
+                    <div class="mode-card glass border border-[#30363d] rounded-3xl p-8 text-center group">
+                        <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-${mod.color}-500 to-${mod.color}-600 flex items-center justify-center">
+                            <i data-lucide="${mod.icon}" class="w-10 h-10 text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-2">${mod.title}</h3>
+                        <p class="text-gray-400 mb-8 min-h-[3.5rem]">${mod.desc}</p>
+                        <a href="${mod.link}" 
+                           class="${mod.btnColor} block w-full py-4 rounded-2xl font-semibold text-white transition-all active:scale-95">
+                            Ouvrir →
+                        </a>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+            
+            lucide.createIcons(); // Réinitialiser les icônes après ajout
+        }
+
+        // Toggle Dark / Light (pour le moment le site est en dark, tu peux étendre plus tard)
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                document.getElementById('theme-toggle').innerHTML = `<i class="fa-solid fa-sun text-xl"></i>`;
+            } else {
+                html.classList.add('dark');
+                document.getElementById('theme-toggle').innerHTML = `<i class="fa-solid fa-moon text-xl"></i>`;
+            }
+        }
+
+        // Lancement
+        window.onload = () => {
+            renderCards();
+        };
+    </script>
 </body>
 </html>
