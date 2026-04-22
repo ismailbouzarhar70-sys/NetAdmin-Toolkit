@@ -10,39 +10,13 @@
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-        }
-        
-        .glass {
-            background: rgba(22, 27, 34, 0.97);
-            backdrop-filter: blur(16px);
-        }
-        
-        .mode-card {
-            transition: all 0.4s cubic-bezier(0.4, 0.2, 1);
-        }
-        
-        .mode-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 30px 60px -15px rgb(0 0 0 / 0.5);
-        }
-        
-        .nav-link {
-            transition: all 0.3s ease;
-        }
-        
-        .nav-link:hover {
-            background-color: #21262d;
-            border-radius: 12px;
-        }
-        
-        .nav-link.active {
-            background-color: #58a6ff;
-            color: white;
-            border-radius: 9999px;
-        }
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .glass { background: rgba(22, 27, 34, 0.97); backdrop-filter: blur(16px); }
+        .mode-card { transition: all 0.4s cubic-bezier(0.4, 0.2, 1); }
+        .mode-card:hover { transform: translateY(-12px); box-shadow: 0 30px 60px -15px rgb(0 0 0 / 0.5); }
+        .nav-link { transition: all 0.3s ease; }
+        .nav-link:hover { background-color: #21262d; border-radius: 12px; }
+        .nav-link.active { background-color: #58a6ff; color: white; border-radius: 9999px; }
     </style>
 </head>
 <body class="bg-[#0d1117] text-[#c9d1d9] min-h-screen">
@@ -57,14 +31,11 @@
                     <p class="text-sm text-gray-500 -mt-1">v2.6 • Engineering Suite</p>
                 </div>
             </div>
-            
             <div class="flex items-center gap-5">
-                <button onclick="toggleDarkMode()" id="theme-toggle"
-                        class="p-3 rounded-2xl hover:bg-[#30363d] transition-all text-2xl">
+                <button onclick="toggleDarkMode()" id="theme-toggle" class="p-3 rounded-2xl hover:bg-[#30363d] transition-all text-2xl">
                     <i class="fa-solid fa-moon"></i>
                 </button>
-                <a href="https://github.com/ismailbouzarhar70-sys/NetAdmin-Toolkit" target="_blank" 
-                   class="text-3xl hover:text-white transition-colors">
+                <a href="https://github.com/ismailbouzarhar70-sys/NetAdmin-Toolkit" target="_blank" class="text-3xl hover:text-white transition-colors">
                     <i class="fa-brands fa-github"></i>
                 </a>
             </div>
@@ -77,24 +48,19 @@
             <div class="p-8">
                 <nav class="space-y-2">
                     <a href="index.html" class="nav-link active flex items-center gap-3 px-6 py-4 text-base font-medium">
-                        <i data-lucide="home" class="w-6 h-6"></i>
-                        Accueil
+                        <i data-lucide="home" class="w-6 h-6"></i> Accueil
                     </a>
                     <a href="calculateur.html?mode=ip" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
-                        <i data-lucide="network" class="w-6 h-6"></i>
-                        IP Manager
+                        <i data-lucide="network" class="w-6 h-6"></i> IP Manager
                     </a>
                     <a href="calculateur.html?mode=cisco" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
-                        <i data-lucide="cpu" class="w-6 h-6"></i>
-                        Cisco Engine
+                        <i data-lucide="cpu" class="w-6 h-6"></i> Cisco Engine
                     </a>
                     <a href="cours.html" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
-                        <i data-lucide="book-open" class="w-6 h-6"></i>
-                        IT Academy
+                        <i data-lucide="book-open" class="w-6 h-6"></i> IT Academy
                     </a>
                     <a href="tools.html" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
-                        <i data-lucide="toolbox" class="w-6 h-6"></i>
-                        Admin Tools
+                        <i data-lucide="toolbox" class="w-6 h-6"></i> Admin Tools
                     </a>
                 </nav>
             </div>
@@ -109,8 +75,6 @@
                         Tout ce dont tu as besoin pour administrer et apprendre les réseaux.
                     </p>
                 </div>
-
-                <!-- GRILLE -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10" id="modes-grid"></div>
             </div>
         </main>
@@ -120,40 +84,15 @@
         lucide.createIcons();
 
         const modules = [
-            {
-                title: "IP Manager",
-                icon: "network",
-                color: "blue",
-                desc: "Calculateur IPv4 / IPv6, subnetting, VLSM",
-                link: "calculateur.html?mode=ip"
-            },
-            {
-                title: "Cisco Engine",
-                icon: "cpu",
-                color: "emerald",
-                desc: "Générateur de configurations Cisco (ACL, VLAN, OSPF, NAT...)",
-                link: "calculateur.html?mode=cisco"
-            },
-            {
-                title: "IT Academy",
-                icon: "book-open",
-                color: "amber",
-                desc: "Cours, fiches de révision et quizzes CCNA / Linux",
-                link: "cours.html"
-            },
-            {
-                title: "Admin Tools",
-                icon: "toolbox",
-                color: "violet",
-                desc: "Commandes, convertisseurs, outils système",
-                link: "tools.html"
-            }
+            { title: "IP Manager", icon: "network", color: "blue", desc: "Calculateur IPv4 / IPv6, subnetting, VLSM", link: "calculateur.html?mode=ip" },
+            { title: "Cisco Engine", icon: "cpu", color: "emerald", desc: "Générateur de configurations Cisco (ACL, VLAN, OSPF, NAT...)", link: "calculateur.html?mode=cisco" },
+            { title: "IT Academy", icon: "book-open", color: "amber", desc: "Cours, fiches de révision et quizzes CCNA / Linux", link: "cours.html" },
+            { title: "Admin Tools", icon: "toolbox", color: "violet", desc: "Commandes, convertisseurs, outils système", link: "tools.html" }
         ];
 
         function renderCards() {
             const container = document.getElementById('modes-grid');
             container.innerHTML = '';
-
             modules.forEach(mod => {
                 const cardHTML = `
                     <div class="mode-card glass border border-[#30363d] rounded-3xl p-10 text-center group">
@@ -162,16 +101,13 @@
                         </div>
                         <h3 class="text-3xl font-semibold mb-4">${mod.title}</h3>
                         <p class="text-gray-400 mb-12 text-[17px] leading-relaxed">${mod.desc}</p>
-                        <a href="${mod.link}" 
-                           class="block w-full py-6 rounded-2xl font-semibold text-lg shadow-lg transition-all 
-                                  bg-gradient-to-r from-${mod.color}-600 to-${mod.color}-700 hover:brightness-110 active:scale-[0.97]">
+                        <a href="${mod.link}" class="block w-full py-6 rounded-2xl font-semibold text-lg shadow-lg transition-all bg-gradient-to-r from-${mod.color}-600 to-${mod.color}-700 hover:brightness-110 active:scale-[0.97]">
                             Ouvrir →
                         </a>
                     </div>
                 `;
                 container.innerHTML += cardHTML;
             });
-            
             lucide.createIcons();
         }
 
