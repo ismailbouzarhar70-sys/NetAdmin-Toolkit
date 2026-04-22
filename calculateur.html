@@ -1,70 +1,271 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NetAdmin Toolkit - IPv4 & IPv6</title>
-    <link rel="stylesheet" href="style.css">
+    <title>NetAdmin Toolkit - Calculateur Réseau</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        
+        .glass {
+            background: rgba(22, 27, 34, 0.97);
+            backdrop-filter: blur(16px);
+        }
+        
+        .result-item {
+            transition: all 0.3s ease;
+        }
+        
+        .result-item:hover {
+            transform: translateX(8px);
+            background-color: rgba(88, 166, 255, 0.1);
+        }
+        
+        pre {
+            background: #0d1117;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #30363d;
+            overflow-x: auto;
+            font-family: ui-monospace, monospace;
+            white-space: pre;
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>NetAdmin Toolkit</h1>
-            <p style="text-align:center; color:#8b949e;">Calculateur Réseau Multi-Protocole</p>
-        </header>
+<body class="bg-[#0d1117] text-[#c9d1d9] min-h-screen">
 
-        <section>
-            <div class="form-group">
-                <label>Version du Protocole</label>
-                <select id="ipVersion">
-                    <option value="v4">IPv4 (Standard)</option>
-                    <option value="v6">IPv6 (Next Gen)</option>
-                </select>
+    <!-- HEADER -->
+    <header class="fixed top-0 left-0 right-0 bg-[#161b22] border-b border-[#30363d] z-50">
+        <div class="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white font-bold text-2xl">N</div>
+                    <div>
+                        <h1 class="text-2xl font-bold tracking-tighter">NetAdmin Toolkit</h1>
+                        <p class="text-xs text-gray-500 -mt-1">v2.6 • Engineering Suite</p>
+                    </div>
+                </a>
             </div>
+            
+            <div class="flex items-center gap-5">
+                <button onclick="toggleDarkMode()" id="theme-toggle"
+                        class="p-3 rounded-2xl hover:bg-[#30363d] transition-all text-2xl">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <a href="https://github.com/ismailbouzarhar70-sys/NetAdmin-Toolkit" target="_blank" 
+                   class="text-3xl hover:text-white transition-colors">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+            </div>
+        </div>
+    </header>
 
-            <div id="v4Inputs">
-                <div class="form-group">
-                    <label>Adresse IP</label>
-                    <input type="text" id="ipInput" placeholder="ex: 192.168.1.0">
+    <div class="flex pt-24">
+        <!-- SIDEBAR -->
+        <aside class="w-72 bg-[#161b22] border-r border-[#30363d] h-[calc(100vh-6rem)] fixed hidden lg:block overflow-y-auto">
+            <div class="p-8">
+                <nav class="space-y-2">
+                    <a href="index.html" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
+                        <i data-lucide="home" class="w-6 h-6"></i>
+                        Accueil
+                    </a>
+                    <a href="calculateur.html?mode=ip" class="nav-link active flex items-center gap-3 px-6 py-4 text-base font-medium">
+                        <i data-lucide="network" class="w-6 h-6"></i>
+                        IP Manager
+                    </a>
+                    <a href="calculateur.html?mode=cisco" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
+                        <i data-lucide="cpu" class="w-6 h-6"></i>
+                        Cisco Engine
+                    </a>
+                    <a href="cours.html" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
+                        <i data-lucide="book-open" class="w-6 h-6"></i>
+                        IT Academy
+                    </a>
+                    <a href="tools.html" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
+                        <i data-lucide="toolbox" class="w-6 h-6"></i>
+                        Admin Tools
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 lg:ml-72 p-8 lg:p-12">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-10">
+                    <h2 class="text-4xl font-bold tracking-tight mb-2">IP Manager</h2>
+                    <p class="text-gray-400 text-lg">Calculateur IPv4 & IPv6 • Subnetting • VLSM</p>
                 </div>
-                <div class="form-group">
-                    <label>Masque (CIDR /n)</label>
-                    <input type="number" id="cidrInput" value="24" min="0" max="32">
+
+                <div class="glass border border-[#30363d] rounded-3xl p-10">
+                    <!-- Sélection Version IP -->
+                    <div class="mb-8">
+                        <label class="block text-sm font-medium text-gray-400 mb-3">Version du Protocole</label>
+                        <div class="flex gap-3">
+                            <button onclick="switchVersion('v4')" id="btn-v4"
+                                    class="flex-1 py-4 rounded-2xl font-semibold transition-all active:scale-95 bg-blue-600 text-white">
+                                IPv4
+                            </button>
+                            <button onclick="switchVersion('v6')" id="btn-v6"
+                                    class="flex-1 py-4 rounded-2xl font-semibold transition-all active:scale-95 bg-gray-700 hover:bg-gray-600">
+                                IPv6
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Inputs IPv4 -->
+                    <div id="v4Inputs">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Adresse IP</label>
+                                <input type="text" id="ipInput" 
+                                       class="w-full bg-[#0d1117] border border-[#30363d] rounded-2xl px-5 py-4 focus:border-blue-500 outline-none text-lg"
+                                       placeholder="192.168.1.0">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Masque CIDR (/n)</label>
+                                <input type="number" id="cidrInput" value="24" min="0" max="32"
+                                       class="w-full bg-[#0d1117] border border-[#30363d] rounded-2xl px-5 py-4 focus:border-blue-500 outline-none text-lg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inputs IPv6 -->
+                    <div id="v6Inputs" class="hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Adresse IPv6</label>
+                                <input type="text" id="ip6Input" 
+                                       class="w-full bg-[#0d1117] border border-[#30363d] rounded-2xl px-5 py-4 focus:border-blue-500 outline-none text-lg"
+                                       placeholder="2001:db8::1">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-2">Préfixe (/n)</label>
+                                <input type="number" id="cidr6Input" value="64" min="0" max="128"
+                                       class="w-full bg-[#0d1117] border border-[#30363d] rounded-2xl px-5 py-4 focus:border-blue-500 outline-none text-lg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 mt-10">
+                        <button onclick="calculateIP()" 
+                                class="flex-1 bg-blue-600 hover:bg-blue-700 py-5 rounded-2xl font-semibold text-lg transition-all active:scale-95">
+                            Calculer les détails
+                        </button>
+                        <button onclick="generateCiscoConfig()" id="configBtn"
+                                class="flex-1 bg-emerald-600 hover:bg-emerald-700 py-5 rounded-2xl font-semibold text-lg transition-all active:scale-95 hidden">
+                            Générer Config Cisco
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SECTION RÉSULTATS -->
+                <div id="resultSection" class="hidden mt-10">
+                    <div class="glass border border-[#30363d] rounded-3xl p-10">
+                        <h3 class="text-2xl font-semibold mb-8 flex items-center gap-3">
+                            <i data-lucide="check-circle" class="w-7 h-7 text-emerald-500"></i>
+                            Résultats du Calcul
+                        </h3>
+                        
+                        <div class="space-y-4" id="results-container">
+                            <!-- Résultats injectés par JavaScript -->
+                        </div>
+
+                        <div id="configArea" class="hidden mt-12">
+                            <h4 class="text-emerald-400 font-medium mb-4 flex items-center gap-2">
+                                <i data-lucide="terminal" class="w-5 h-5"></i>
+                                Configuration Cisco
+                            </h4>
+                            <pre id="ciscoCode" class="text-sm text-gray-300"></pre>
+                            <div class="flex gap-3 mt-6">
+                                <button onclick="copyToClipboard()" 
+                                        class="flex-1 bg-gray-700 hover:bg-gray-600 py-4 rounded-2xl font-medium">
+                                    Copier le code
+                                </button>
+                                <button onclick="downloadConfig()" 
+                                        class="flex-1 bg-emerald-600 hover:bg-emerald-700 py-4 rounded-2xl font-medium">
+                                    Télécharger .txt
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div id="v6Inputs" style="display: none;">
-                <div class="form-group">
-                    <label>Adresse IPv6</label>
-                    <input type="text" id="ip6Input" placeholder="ex: 2001:db8::1">
-                </div>
-                <div class="form-group">
-                    <label>Préfixe (/n)</label>
-                    <input type="number" id="cidr6Input" value="64" min="0" max="128">
-                </div>
-            </div>
-
-            <button id="calculateBtn">Calculer les détails</button>
-            <button id="configBtn" style="background-color: #58a6ff; margin-top: 10px; display: none;">Générer Config Cisco</button>
-        </section>
-
-        <section id="resultSection" style="display: none;">
-            <h2 style="font-size: 1.2rem; border-bottom: 1px solid #30363d; padding-bottom: 10px; margin-bottom: 15px;">Résultats du Calcul</h2>
-            <div class="results-container">
-                <div class="result-item"><strong>ID Réseau :</strong> <span id="resNetwork"></span></div>
-                <div class="result-item"><strong>Masque :</strong> <span id="resMask"></span></div>
-                <div class="result-item"><strong>Première IP :</strong> <span id="resFirst"></span></div>
-                <div class="result-item"><strong>Dernière IP :</strong> <span id="resLast"></span></div>
-                <div class="result-item"><strong>Broadcast :</strong> <span id="resBroadcast"></span></div>
-                <div class="result-item"><strong>Nombre d'hôtes :</strong> <span id="resHosts"></span></div>
-            </div>
-
-            <div id="configArea" style="display: none; margin-top: 25px;">
-                <strong style="color: #58a6ff; font-size: 0.8rem; text-transform: uppercase;">Console Cisco :</strong>
-                <pre id="ciscoCode"></pre>
-            </div>
-        </section>
+        </main>
     </div>
+
     <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const btn = document.getElementById('theme-toggle');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                btn.innerHTML = `<i class="fa-solid fa-sun"></i>`;
+            } else {
+                html.classList.add('dark');
+                btn.innerHTML = `<i class="fa-solid fa-moon"></i>`;
+            }
+        }
+
+        // Switch entre IPv4 et IPv6
+        function switchVersion(version) {
+            const v4Inputs = document.getElementById('v4Inputs');
+            const v6Inputs = document.getElementById('v6Inputs');
+            const btnV4 = document.getElementById('btn-v4');
+            const btnV6 = document.getElementById('btn-v6');
+
+            if (version === 'v4') {
+                v4Inputs.classList.remove('hidden');
+                v6Inputs.classList.add('hidden');
+                btnV4.classList.add('bg-blue-600', 'text-white');
+                btnV4.classList.remove('bg-gray-700');
+                btnV6.classList.remove('bg-blue-600', 'text-white');
+                btnV6.classList.add('bg-gray-700');
+            } else {
+                v4Inputs.classList.add('hidden');
+                v6Inputs.classList.remove('hidden');
+                btnV6.classList.add('bg-blue-600', 'text-white');
+                btnV6.classList.remove('bg-gray-700');
+                btnV4.classList.remove('bg-blue-600', 'text-white');
+                btnV4.classList.add('bg-gray-700');
+            }
+        }
+
+        // Fonction pour copier dans le presse-papiers (à utiliser avec ton script.js)
+        function copyToClipboard() {
+            const code = document.getElementById('ciscoCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert("✅ Code copié dans le presse-papiers !");
+            });
+        }
+
+        function downloadConfig() {
+            const code = document.getElementById('ciscoCode').textContent;
+            const blob = new Blob([code], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'cisco_config.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialisation
+        window.onload = () => {
+            lucide.createIcons();
+            // Par défaut on reste sur IPv4
+        };
+    </script>
 </body>
 </html>
