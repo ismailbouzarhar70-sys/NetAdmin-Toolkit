@@ -13,7 +13,6 @@
         body { font-family: 'Inter', system-ui, sans-serif; }
         .glass { background: rgba(22, 27, 34, 0.97); backdrop-filter: blur(16px); }
         .result-item:hover { transform: translateX(8px); background-color: rgba(88, 166, 255, 0.12); }
-        pre { font-family: ui-monospace, monospace; background: #0d1117; padding: 20px; border-radius: 12px; border: 1px solid #30363d; overflow-x: auto; }
     </style>
 </head>
 <body class="bg-[#0d1117] text-[#c9d1d9] min-h-screen">
@@ -21,7 +20,7 @@
     <!-- HEADER -->
     <header class="fixed top-0 left-0 right-0 bg-[#161b22] border-b border-[#30363d] z-50">
         <div class="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-colors">
+            <a href="index.html" class="flex items-center gap-3 hover:opacity-80">
                 <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white font-bold text-2xl">N</div>
                 <div>
                     <h1 class="text-2xl font-bold tracking-tighter">NetAdmin Toolkit</h1>
@@ -29,12 +28,9 @@
                 </div>
             </a>
             <div class="flex items-center gap-5">
-                <button onclick="toggleDarkMode()" id="theme-toggle" class="p-3 rounded-2xl hover:bg-[#30363d] transition-all text-2xl">
+                <button onclick="toggleDarkMode()" id="theme-toggle" class="p-3 rounded-2xl hover:bg-[#30363d] text-2xl">
                     <i class="fa-solid fa-moon"></i>
                 </button>
-                <a href="https://github.com/ismailbouzarhar70-sys/NetAdmin-Toolkit" target="_blank" class="text-3xl hover:text-white transition-colors">
-                    <i class="fa-brands fa-github"></i>
-                </a>
             </div>
         </div>
     </header>
@@ -44,19 +40,19 @@
         <aside class="w-72 bg-[#161b22] border-r border-[#30363d] h-[calc(100vh-6rem)] fixed hidden lg:block overflow-y-auto">
             <div class="p-8">
                 <nav class="space-y-2">
-                    <a href="index.html" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium hover:bg-[#21262d] rounded-xl">
+                    <a href="index.html" class="flex items-center gap-3 px-6 py-4 text-base font-medium hover:bg-[#21262d] rounded-xl">
                         <i data-lucide="home" class="w-6 h-6"></i> Accueil
                     </a>
-                    <a href="calculateur.html?mode=ip" id="link-ip" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium hover:bg-[#21262d] rounded-xl">
+                    <a href="calculateur.html?mode=ip" id="link-ip" class="flex items-center gap-3 px-6 py-4 text-base font-medium hover:bg-[#21262d] rounded-xl">
                         <i data-lucide="network" class="w-6 h-6"></i> IP Manager
                     </a>
-                    <a href="calculateur.html?mode=cisco" id="link-cisco" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium hover:bg-[#21262d] rounded-xl">
+                    <a href="calculateur.html?mode=cisco" id="link-cisco" class="flex items-center gap-3 px-6 py-4 text-base font-medium hover:bg-[#21262d] rounded-xl">
                         <i data-lucide="cpu" class="w-6 h-6"></i> Cisco Engine
                     </a>
-                    <a href="cours.html" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium hover:bg-[#21262d] rounded-xl">
+                    <a href="cours.html" class="flex items-center gap-3 px-6 py-4 text-base font-medium hover:bg-[#21262d] rounded-xl">
                         <i data-lucide="book-open" class="w-6 h-6"></i> IT Academy
                     </a>
-                    <a href="tools.html" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium hover:bg-[#21262d] rounded-xl">
+                    <a href="tools.html" class="flex items-center gap-3 px-6 py-4 text-base font-medium hover:bg-[#21262d] rounded-xl">
                         <i data-lucide="toolbox" class="w-6 h-6"></i> Admin Tools
                     </a>
                 </nav>
@@ -97,41 +93,27 @@
             const titleEl = document.getElementById('page-title');
             const contentEl = document.getElementById('dynamic-content');
 
-            // Mise à jour des liens actifs dans la sidebar
+            // Liens actifs
             document.getElementById('link-ip').classList.toggle('bg-blue-600', mode === 'ip');
             document.getElementById('link-ip').classList.toggle('text-white', mode === 'ip');
             document.getElementById('link-cisco').classList.toggle('bg-emerald-600', mode === 'cisco');
             document.getElementById('link-cisco').classList.toggle('text-white', mode === 'cisco');
 
             if (mode === 'ip') {
-                // ==================== MODE IP MANAGER ====================
-                titleEl.innerHTML = `
-                    <h2 class="text-4xl font-bold tracking-tight mb-2">IP Manager</h2>
-                    <p class="text-gray-400 text-lg">Calculateur IPv4 • Subnetting • VLSM</p>
-                `;
+                titleEl.innerHTML = `<h2 class="text-4xl font-bold mb-2">IP Manager</h2><p class="text-gray-400 text-lg">Calculateur IPv4 • Subnetting</p>`;
                 contentEl.innerHTML = `
                     <div class="glass border border-[#30363d] rounded-3xl p-10">
-                        <div class="mb-8">
-                            <label class="block text-sm font-medium text-gray-400 mb-3">Version du Protocole</label>
-                            <button onclick="switchVersion('v4')" id="btn-v4" 
-                                    class="w-full py-5 rounded-2xl font-semibold text-lg bg-blue-600 text-white">IPv4</button>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                             <div>
                                 <label class="block text-sm font-medium text-gray-400 mb-2">Adresse IP</label>
-                                <input type="text" id="ipInput" value="192.168.1.0" 
-                                       class="w-full bg-[#0d1117] border border-[#30363d] rounded-2xl px-6 py-5 text-lg focus:border-blue-500 outline-none">
+                                <input type="text" id="ipInput" value="192.168.1.0" class="w-full bg-[#0d1117] border border-[#30363d] rounded-2xl px-6 py-5 text-lg focus:border-blue-500 outline-none">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-400 mb-2">Masque CIDR (/n)</label>
-                                <input type="number" id="cidrInput" value="24" min="0" max="32"
-                                       class="w-full bg-[#0d1117] border border-[#30363d] rounded-2xl px-6 py-5 text-lg focus:border-blue-500 outline-none">
+                                <input type="number" id="cidrInput" value="24" min="0" max="32" class="w-full bg-[#0d1117] border border-[#30363d] rounded-2xl px-6 py-5 text-lg focus:border-blue-500 outline-none">
                             </div>
                         </div>
-
-                        <button onclick="calculateIP()" 
-                                class="mt-10 w-full bg-blue-600 hover:bg-blue-700 py-6 rounded-2xl font-semibold text-xl transition-all active:scale-95">
+                        <button onclick="calculateIP()" class="w-full bg-blue-600 hover:bg-blue-700 py-6 rounded-2xl font-semibold text-xl">
                             Calculer les détails
                         </button>
                     </div>
@@ -143,75 +125,52 @@
                         </div>
                     </div>
                 `;
-            } 
-            else if (mode === 'cisco') {
-                // ==================== MODE CISCO ENGINE ====================
-                titleEl.innerHTML = `
-                    <h2 class="text-4xl font-bold tracking-tight mb-2">Cisco Engine</h2>
-                    <p class="text-gray-400 text-lg">Générateur de configurations Cisco</p>
-                `;
+            } else if (mode === 'cisco') {
+                titleEl.innerHTML = `<h2 class="text-4xl font-bold mb-2">Cisco Engine</h2><p class="text-gray-400 text-lg">Générateur de configurations Cisco</p>`;
                 contentEl.innerHTML = `
                     <div class="glass border border-[#30363d] rounded-3xl p-16 text-center">
-                        <div class="w-32 h-32 mx-auto mb-10 bg-emerald-600 rounded-3xl flex items-center justify-center shadow-2xl">
+                        <div class="w-32 h-32 mx-auto mb-10 bg-emerald-600 rounded-3xl flex items-center justify-center">
                             <i data-lucide="cpu" class="w-20 h-20 text-white"></i>
                         </div>
-                        <h3 class="text-3xl font-semibold mb-4">Cisco Engine</h3>
-                        <p class="text-gray-400 text-xl mb-8 max-w-md mx-auto">
-                            Générateur de configurations Cisco (ACL, VLAN, OSPF, NAT, Port Security...)
-                        </p>
-                        <div class="text-amber-400 text-lg">
-                            Les templates arrivent très bientôt !<br>
-                            <span class="text-sm text-gray-500 mt-4 block">Version 2.7 en cours de développement</span>
-                        </div>
+                        <h3 class="text-3xl font-semibold mb-6">Cisco Engine</h3>
+                        <p class="text-gray-400 text-xl mb-10">Générateur de configurations Cisco (ACL, VLAN, OSPF, NAT...)</p>
+                        <p class="text-amber-400 text-lg">Les templates complets arrivent dans la prochaine mise à jour !</p>
                     </div>
                 `;
             }
             lucide.createIcons();
         }
 
-        // Fonction de calcul IP
         function calculateIP() {
             const ip = document.getElementById('ipInput').value.trim();
             const cidr = parseInt(document.getElementById('cidrInput').value);
 
-            if (!ip) {
-                alert("Veuillez entrer une adresse IP valide.");
-                return;
-            }
-
+            if (!ip) return alert("Entrez une adresse IP");
             const parts = ip.split('.').map(Number);
-            if (parts.length !== 4 || parts.some(p => isNaN(p) || p < 0 || p > 255)) {
-                alert("Adresse IP invalide ! Format attendu : 192.168.1.0");
-                return;
-            }
-
-            if (isNaN(cidr) || cidr < 0 || cidr > 32) {
-                alert("Masque CIDR invalide (doit être entre 0 et 32)");
-                return;
-            }
+            if (parts.length !== 4 || parts.some(p => isNaN(p) || p < 0 || p > 255)) 
+                return alert("Adresse IP invalide !");
 
             const mask = ~((1 << (32 - cidr)) - 1);
             const ipInt = (parts[0] << 24) | (parts[1] << 16) | (parts[2] << 8) | parts[3];
             const network = ipInt & mask;
             const broadcast = network | ~mask;
-
             const toIP = n => `${(n>>24)&255}.${(n>>16)&255}.${(n>>8)&255}.${n&255}`;
 
             const html = `
-                <div class="result-item glass border border-[#30363d] rounded-2xl p-6 flex justify-between items-center">
-                    <strong>ID Réseau</strong> <span class="font-mono">${toIP(network)}/${cidr}</span>
+                <div class="result-item glass border border-[#30363d] rounded-2xl p-6 flex justify-between">
+                    <strong>ID Réseau</strong><span>${toIP(network)}/${cidr}</span>
                 </div>
-                <div class="result-item glass border border-[#30363d] rounded-2xl p-6 flex justify-between items-center">
-                    <strong>Première IP utilisable</strong> <span class="font-mono">${toIP(network + 1)}</span>
+                <div class="result-item glass border border-[#30363d] rounded-2xl p-6 flex justify-between">
+                    <strong>Première IP</strong><span>${toIP(network + 1)}</span>
                 </div>
-                <div class="result-item glass border border-[#30363d] rounded-2xl p-6 flex justify-between items-center">
-                    <strong>Dernière IP utilisable</strong> <span class="font-mono">${toIP(broadcast - 1)}</span>
+                <div class="result-item glass border border-[#30363d] rounded-2xl p-6 flex justify-between">
+                    <strong>Dernière IP</strong><span>${toIP(broadcast - 1)}</span>
                 </div>
-                <div class="result-item glass border border-[#30363d] rounded-2xl p-6 flex justify-between items-center">
-                    <strong>Broadcast</strong> <span class="font-mono">${toIP(broadcast)}</span>
+                <div class="result-item glass border border-[#30363d] rounded-2xl p-6 flex justify-between">
+                    <strong>Broadcast</strong><span>${toIP(broadcast)}</span>
                 </div>
-                <div class="result-item glass border border-[#30363d] rounded-2xl p-6 flex justify-between items-center">
-                    <strong>Nombre d'hôtes</strong> <span class="font-mono">${Math.pow(2, 32 - cidr) - 2}</span>
+                <div class="result-item glass border border-[#30363d] rounded-2xl p-6 flex justify-between">
+                    <strong>Hôtes</strong><span>${Math.pow(2, 32 - cidr) - 2}</span>
                 </div>
             `;
 
@@ -219,12 +178,6 @@
             document.getElementById('resultSection').classList.remove('hidden');
         }
 
-        function switchVersion(v) {
-            // Pour l'instant on reste sur IPv4 (IPv6 à venir)
-            alert("IPv6 sera disponible dans la prochaine mise à jour !");
-        }
-
-        // Lancement de la page
         window.onload = loadPage;
     </script>
 </body>
