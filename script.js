@@ -53,23 +53,38 @@ document.getElementById('calculateBtn').addEventListener('click', function() {
         let last = [...broad]; last[3]--;
 
         // --- INJECTION DANS LE HTML ---
-        document.getElementById('resNetwork').innerText = net.join('.');
-        document.getElementById('resMask').innerText = maskStr;
-        document.getElementById('resBroadcast').innerText = broad.join('.');
-        document.getElementById('resHosts').innerText = hosts > 0 ? hosts.toLocaleString() : 0;
-        
-        if (hosts > 0) {
-            document.getElementById('resFirst').innerText = first.join('.');
-            document.getElementById('resLast').innerText = last.join('.');
-            lastCalc.ip = first.join('.'); 
-        } else {
-            document.getElementById('resFirst').innerText = "N/A";
-            document.getElementById('resLast').innerText = "N/A";
-            lastCalc.ip = net.join('.');
-        }
+      // --- CALCULS LOGIQUES (Gardés tels quels) ---
+    let first = [...net]; first[3]++;
+    let last = [...broad]; last[3]--;
 
-        lastCalc.mask = maskStr;
-        lastCalc.version = "v4";
+    // --- NOUVELLE INJECTION SÉCURISÉE ---
+    const inject = (id, value) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = value;
+    };
+
+    inject('resNetwork', net.join('.'));
+    inject('resMask', maskStr);
+    inject('resBroadcast', broad.join('.'));
+    inject('resHosts', hosts > 0 ? hosts.toLocaleString() : "0");
+
+    if (hosts > 0) {
+        inject('resFirst', first.join('.'));
+        inject('resLast', last.join('.'));
+        lastCalc.ip = first.join('.');
+    } else {
+        inject('resFirst', "N/A");
+        inject('resLast', "N/A");
+        lastCalc.ip = net.join('.');
+    }
+
+    // --- MISE À JOUR DES DONNÉES GLOBALES ---
+    lastCalc.mask = maskStr;
+    lastCalc.version = "v4";
+
+    // Afficher la zone de résultat si elle était cachée
+    const resultSection = document.getElementById('resultSection');
+    if (resultSection) resultSection.style.display = 'block';
 
     } else {
         // Logique IPv6 simplifiée
