@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         
@@ -15,21 +16,26 @@
         }
         
         .glass {
-            background: rgba(22, 27, 34, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(22, 27, 34, 0.97);
+            backdrop-filter: blur(16px);
         }
         
         .mode-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0.2, 1);
         }
         
         .mode-card:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2), 0 8px 10px -6px rgb(0 0 0 / 0.2);
+            transform: translateY(-12px);
+            box-shadow: 0 30px 60px -15px rgb(0 0 0 / 0.5);
         }
         
         .nav-link {
             transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            background-color: #21262d;
+            border-radius: 12px;
         }
         
         .nav-link.active {
@@ -43,51 +49,51 @@
 
     <!-- HEADER -->
     <header class="fixed top-0 left-0 right-0 bg-[#161b22] border-b border-[#30363d] z-50">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">N</div>
+        <div class="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-11 h-11 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-xl">N</div>
                 <div>
-                    <h1 class="text-2xl font-semibold tracking-tight">NetAdmin Toolkit</h1>
-                    <p class="text-xs text-gray-500 -mt-1">v2.6 • Engineering Suite</p>
+                    <h1 class="text-3xl font-bold tracking-tighter">NetAdmin Toolkit</h1>
+                    <p class="text-sm text-gray-500 -mt-1">v2.6 • Engineering Suite</p>
                 </div>
             </div>
             
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-5">
                 <button onclick="toggleDarkMode()" id="theme-toggle"
-                        class="p-2 rounded-xl hover:bg-[#30363d] transition-colors">
-                    <i class="fa-solid fa-moon text-xl"></i>
+                        class="p-3 rounded-2xl hover:bg-[#30363d] transition-all text-2xl">
+                    <i class="fa-solid fa-moon"></i>
                 </button>
-                <a href="https://github.com/ismailbouzarhar70-sys/NetAdmin-Toolkit" target="_blank"
-                   class="flex items-center gap-2 text-sm hover:text-white transition-colors">
-                    <i class="fa-brands fa-github text-2xl"></i>
+                <a href="https://github.com/ismailbouzarhar70-sys/NetAdmin-Toolkit" target="_blank" 
+                   class="text-3xl hover:text-white transition-colors">
+                    <i class="fa-brands fa-github"></i>
                 </a>
             </div>
         </div>
     </header>
 
-    <div class="flex pt-20">
+    <div class="flex pt-24">
         <!-- SIDEBAR -->
-        <aside class="w-72 bg-[#161b22] border-r border-[#30363d] h-[calc(100vh-5rem)] fixed hidden lg:block overflow-y-auto">
-            <div class="p-6">
+        <aside class="w-72 bg-[#161b22] border-r border-[#30363d] h-[calc(100vh-6rem)] fixed hidden lg:block overflow-y-auto">
+            <div class="p-8">
                 <nav class="space-y-2">
-                    <a href="index.html" class="nav-link active flex items-center gap-3 px-4 py-3 text-sm font-medium">
-                        <i data-lucide="home" class="w-5 h-5"></i>
+                    <a href="index.html" class="nav-link active flex items-center gap-3 px-6 py-4 text-base font-medium">
+                        <i data-lucide="home" class="w-6 h-6"></i>
                         Accueil
                     </a>
-                    <a href="calculateur.html?mode=ip" class="nav-link flex items-center gap-3 px-4 py-3 text-sm font-medium">
-                        <i data-lucide="network" class="w-5 h-5"></i>
+                    <a href="calculateur.html?mode=ip" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
+                        <i data-lucide="network" class="w-6 h-6"></i>
                         IP Manager
                     </a>
-                    <a href="calculateur.html?mode=cisco" class="nav-link flex items-center gap-3 px-4 py-3 text-sm font-medium">
-                        <i data-lucide="cpu" class="w-5 h-5"></i>
+                    <a href="calculateur.html?mode=cisco" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
+                        <i data-lucide="cpu" class="w-6 h-6"></i>
                         Cisco Engine
                     </a>
-                    <a href="cours.html" class="nav-link flex items-center gap-3 px-4 py-3 text-sm font-medium">
-                        <i data-lucide="book-open" class="w-5 h-5"></i>
+                    <a href="cours.html" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
+                        <i data-lucide="book-open" class="w-6 h-6"></i>
                         IT Academy
                     </a>
-                    <a href="tools.html" class="nav-link flex items-center gap-3 px-4 py-3 text-sm font-medium">
-                        <i data-lucide="toolbox" class="w-5 h-5"></i>
+                    <a href="tools.html" class="nav-link flex items-center gap-3 px-6 py-4 text-base font-medium">
+                        <i data-lucide="toolbox" class="w-6 h-6"></i>
                         Admin Tools
                     </a>
                 </nav>
@@ -95,76 +101,70 @@
         </aside>
 
         <!-- MAIN CONTENT -->
-        <main class="flex-1 lg:ml-72 p-6 max-w-7xl mx-auto">
+        <main class="flex-1 lg:ml-72 p-8 lg:p-12">
             <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-12 mt-8">
-                    <h2 class="text-5xl font-bold tracking-tight mb-3">Bienvenue dans ton Toolkit</h2>
-                    <p class="text-xl text-gray-400">Tout ce dont tu as besoin pour administrer et apprendre les réseaux.</p>
+                <div class="text-center mb-16">
+                    <h2 class="text-5xl font-bold tracking-tight mb-4">Bienvenue dans ton Toolkit</h2>
+                    <p class="text-xl text-gray-400 max-w-lg mx-auto">
+                        Tout ce dont tu as besoin pour administrer et apprendre les réseaux.
+                    </p>
                 </div>
 
-                <!-- GRILLE DES MODULES -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="modes-grid">
-                    <!-- Les cartes seront générées par JS pour plus de flexibilité -->
-                </div>
+                <!-- GRILLE -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10" id="modes-grid"></div>
             </div>
         </main>
     </div>
 
     <script>
-        // Initialisation des icônes Lucide
         lucide.createIcons();
 
-        // Données des modules
         const modules = [
             {
                 title: "IP Manager",
                 icon: "network",
                 color: "blue",
                 desc: "Calculateur IPv4 / IPv6, subnetting, VLSM",
-                link: "calculateur.html?mode=ip",
-                btnColor: "bg-blue-600 hover:bg-blue-700"
+                link: "calculateur.html?mode=ip"
             },
             {
                 title: "Cisco Engine",
                 icon: "cpu",
                 color: "emerald",
-                desc: "Générateur de configurations Cisco (ACL, VLAN, OSPF...)",
-                link: "calculateur.html?mode=cisco",
-                btnColor: "bg-emerald-600 hover:bg-emerald-700"
+                desc: "Générateur de configurations Cisco (ACL, VLAN, OSPF, NAT...)",
+                link: "calculateur.html?mode=cisco"
             },
             {
                 title: "IT Academy",
                 icon: "book-open",
                 color: "amber",
                 desc: "Cours, fiches de révision et quizzes CCNA / Linux",
-                link: "cours.html",
-                btnColor: "bg-amber-600 hover:bg-amber-700 text-black"
+                link: "cours.html"
             },
             {
                 title: "Admin Tools",
                 icon: "toolbox",
                 color: "violet",
                 desc: "Commandes, convertisseurs, outils système",
-                link: "tools.html",
-                btnColor: "bg-violet-600 hover:bg-violet-700"
+                link: "tools.html"
             }
         ];
 
-        // Générer les cartes
         function renderCards() {
             const container = document.getElementById('modes-grid');
             container.innerHTML = '';
 
             modules.forEach(mod => {
                 const cardHTML = `
-                    <div class="mode-card glass border border-[#30363d] rounded-3xl p-8 text-center group">
-                        <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-${mod.color}-500 to-${mod.color}-600 flex items-center justify-center">
-                            <i data-lucide="${mod.icon}" class="w-10 h-10 text-white"></i>
+                    <div class="mode-card glass border border-[#30363d] rounded-3xl p-10 text-center group">
+                        <div class="w-28 h-28 mx-auto mb-8 rounded-3xl bg-gradient-to-br from-${mod.color}-500 to-${mod.color}-600 flex items-center justify-center shadow-2xl">
+                            <i data-lucide="${mod.icon}" class="w-14 h-14 text-white"></i>
                         </div>
-                        <h3 class="text-2xl font-semibold mb-2">${mod.title}</h3>
-                        <p class="text-gray-400 mb-8 min-h-[3.5rem]">${mod.desc}</p>
+                        <h3 class="text-3xl font-semibold mb-4">${mod.title}</h3>
+                        <p class="text-gray-400 mb-12 text-[17px] leading-relaxed">${mod.desc}</p>
                         <a href="${mod.link}" 
-                           class="${mod.btnColor} block w-full py-4 rounded-2xl font-semibold text-white transition-all active:scale-95">
+                           class="block w-full py-6 rounded-2xl font-semibold text-lg shadow-lg transition-all 
+                                  bg-gradient-to-r from-${mod.color}-600 to-${mod.color}-700 hover:brightness-110 active:scale-[0.97]">
                             Ouvrir →
                         </a>
                     </div>
@@ -172,25 +172,22 @@
                 container.innerHTML += cardHTML;
             });
             
-            lucide.createIcons(); // Réinitialiser les icônes après ajout
+            lucide.createIcons();
         }
 
-        // Toggle Dark / Light (pour le moment le site est en dark, tu peux étendre plus tard)
         function toggleDarkMode() {
             const html = document.documentElement;
+            const btn = document.getElementById('theme-toggle');
             if (html.classList.contains('dark')) {
                 html.classList.remove('dark');
-                document.getElementById('theme-toggle').innerHTML = `<i class="fa-solid fa-sun text-xl"></i>`;
+                btn.innerHTML = `<i class="fa-solid fa-sun"></i>`;
             } else {
                 html.classList.add('dark');
-                document.getElementById('theme-toggle').innerHTML = `<i class="fa-solid fa-moon text-xl"></i>`;
+                btn.innerHTML = `<i class="fa-solid fa-moon"></i>`;
             }
         }
 
-        // Lancement
-        window.onload = () => {
-            renderCards();
-        };
+        window.onload = renderCards;
     </script>
 </body>
 </html>
