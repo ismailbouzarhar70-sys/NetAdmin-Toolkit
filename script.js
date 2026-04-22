@@ -1,3 +1,17 @@
+window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get('mode');
+
+    if (mode === 'cisco') {
+        // Cache le calculateur et montre la partie Cisco
+        document.getElementById('ip-tool-section').style.display = 'none';
+        document.getElementById('cisco-tool-section').style.display = 'block';
+    } else {
+        // Par défaut, montre l'IP
+        document.getElementById('ip-tool-section').style.display = 'block';
+        document.getElementById('cisco-tool-section').style.display = 'none';
+    }
+});
 // 1. GESTION DU MODE (ACCUEIL)
 window.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
