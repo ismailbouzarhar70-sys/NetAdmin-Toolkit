@@ -131,11 +131,11 @@
             const ip = document.getElementById('ipv4Addr').value.trim();
             const cidr = parseInt(document.getElementById('cidr4').value);
             
-            if (!ip) return alert("Entrez une adresse IPv4");
+            if (!ip) return alert("Enter an IPv4 address");
             
             const parts = ip.split('.').map(Number);
             if (parts.length !== 4 || parts.some(p => isNaN(p) || p < 0 || p > 255)) {
-                return alert("Adresse IPv4 invalide !");
+                return alert("Invalid IPv4 Address");
             }
 
             const mask = ~((1 << (32 - cidr)) - 1);
@@ -146,11 +146,11 @@
 
             const html = `
                 <div class="glass result-card rounded-3xl p-8 animate-in">
-                    <h3 class="text-cyan-400 text-xl font-semibold mb-6">Résultats IPv4</h3>
+                    <h3 class="text-cyan-400 text-xl font-semibold mb-6">IPv4 Results</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-lg">
-                        <div><strong>Réseau :</strong> ${toIP(network)}/${cidr}</div>
-                        <div><strong>Première IP :</strong> ${toIP(network + 1)}</div>
-                        <div><strong>Dernière IP :</strong> ${toIP(broadcast - 1)}</div>
+                        <div><strong>Network :</strong> ${toIP(network)}/${cidr}</div>
+                        <div><strong>First IP :</strong> ${toIP(network + 1)}</div>
+                        <div><strong>Last IP :</strong> ${toIP(broadcast - 1)}</div>
                         <div><strong>Broadcast :</strong> ${toIP(broadcast)}</div>
                         <div class="md:col-span-2"><strong>Hôtes utilisables :</strong> ${(1 << (32 - cidr)) - 2}</div>
                     </div>
@@ -164,18 +164,18 @@
             const addr = document.getElementById('ipv6Addr').value.trim();
             const prefix = parseInt(document.getElementById('cidr6').value);
 
-            if (!addr) return alert("Entrez une adresse IPv6");
+            if (!addr) return alert("Enter an IPv6 address");
 
             const network = addr.split('::')[0] + '::';
 
             const html = `
                 <div class="glass result-card rounded-3xl p-8 animate-in">
-                    <h3 class="text-cyan-400 text-xl font-semibold mb-6">Résultats IPv6</h3>
+                    <h3 class="text-cyan-400 text-xl font-semibold mb-6">IPv6 Results</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-lg">
-                        <div><strong>Adresse :</strong> ${addr}</div>
+                        <div><strong>Address :</strong> ${addr}</div>
                         <div><strong>Prefix :</strong> /${prefix}</div>
-                        <div><strong>Réseau :</strong> ${network}/${prefix}</div>
-                        <div class="text-emerald-400"><strong>Première adresse :</strong> ${network}1</div>
+                        <div><strong>Network :</strong> ${network}/${prefix}</div>
+                        <div class="text-emerald-400"><strong>First Address :</strong> ${network}1</div>
                     </div>
                 </div>
             `;
