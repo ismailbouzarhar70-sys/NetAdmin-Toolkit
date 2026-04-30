@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ressources YouTube - NetAdmin Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .glass { 
+            background: rgba(15, 23, 42, 0.85); 
+            backdrop-filter: blur(16px); 
+            border: 1px solid rgba(148, 163, 184, 0.15); 
+        }
+
+        @keyframes fadeInUp { 
+            from { opacity: 0; transform: translateY(40px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        @keyframes glow { 
+            0%, 100% { text-shadow: 0 0 10px rgb(34 211 238); } 
+            50% { text-shadow: 0 0 30px rgb(34 211 238); } 
+        }
+
+        .animate-in { animation: fadeInUp 0.7s ease forwards; }
+        .channel-card { 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .channel-card:hover { 
+            transform: translateY(-12px) scale(1.03); 
+        }
+        .sidebar-link { transition: all 0.3s ease; }
+        .sidebar-link:hover { transform: translateX(12px); background-color: rgba(34, 211, 238, 0.1) !important; }
+        .glow-title { animation: glow 3s ease-in-out infinite; }
+    </style>
+</head>
+<body class="bg-[#0a0f1c] text-slate-200 min-h-screen">
+
+    <div class="flex pt-24">
+        <!-- SIDEBAR -->
+        <aside class="w-72 bg-[#0f172a] border-r border-slate-700 h-[calc(100vh-6rem)] fixed hidden lg:block overflow-auto">
+            <div class="p-6 space-y-2">
+                <a href="index.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                    <i data-lucide="home" class="w-5 h-5"></i> Homepage
+                </a>
+                <a href="ip-manager.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                    <i data-lucide="network" class="w-5 h-5"></i> IP Manager
+                </a>
+                <a href="cisco-engine.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                    <i data-lucide="cpu" class="w-5 h-5"></i> Cisco Engine
+                </a>
+                <a href="tools.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                    <i data-lucide="toolbox" class="w-5 h-5"></i> Career Guide
+                </a>
+                <a href="learning.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl bg-cyan-500/10 text-cyan-400 sidebar-link">
+                    <i data-lucide="play-circle" class="w-5 h-5"></i> Learning Resources
+                </a>
+                <a href="feedback.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                    <i data-lucide="message-square" class="w-5 h-5"></i> Feedback
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 lg:ml-72 p-8">
+            <h1 class="text-5xl font-bold mb-2 glow-title animate-in">📺 Ressources YouTube</h1>
+            <p class="text-slate-400 mb-12 text-xl animate-in">Les meilleures chaînes pour apprendre le Réseau, Cisco CCNA, et plus encore</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="channels"></div>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const channels = [
+            {
+                name: "NetworkChuck",
+                desc: "La meilleure chaîne pour débutants CCNA. Très pratique et motivante.",
+                url: "https://www.youtube.com/c/NetworkChuck",
+                subs: "1.5M+",
+                color: "emerald"
+            },
+            {
+                name: "David Bombal",
+                desc: "Excellent pour CCNA, Python, NetDevOps et networking moderne.",
+                url: "https://www.youtube.com/c/DavidBombal",
+                subs: "1.8M+",
+                color: "cyan"
+            },
+            {
+                name: "Jeremy's IT Lab",
+                desc: "Cours CCNA complet et extrêmement détaillé (recommandé pour la théorie).",
+                url: "https://www.youtube.com/c/JeremysITLab",
+                subs: "300K+",
+                color: "amber"
+            },
+            {
+                name: "Keith Barker",
+                desc: "Ancien instructeur Cisco officiel, explications très claires.",
+                url: "https://www.youtube.com/c/KeithBarker",
+                subs: "150K+",
+                color: "rose"
+            },
+            {
+                name: "CBT Nuggets",
+                desc: "Contenu professionnel CCNA, CCNP, Sécurité et Cloud.",
+                url: "https://www.youtube.com/c/CBTNuggets",
+                subs: "200K+",
+                color: "violet"
+            },
+            {
+                name: "Sunny Classroom",
+                desc: "Explications simples, visuelles et parfaites pour les débutants.",
+                url: "https://www.youtube.com/c/SunnyClassroom",
+                subs: "300K+",
+                color: "sky"
+            }
+        ];
+
+        function loadChannels() {
+            const container = document.getElementById('channels');
+            container.innerHTML = channels.map((ch, index) => `
+                <a href="${ch.url}" target="_blank" 
+                   class="glass channel-card rounded-3xl p-6 animate-in"
+                   style="animation-delay: ${index * 100}ms">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="w-16 h-16 bg-gradient-to-br from-${ch.color}-500 to-${ch.color}-600 rounded-2xl flex items-center justify-center text-4xl">
+                            ▶
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-xl">${ch.name}</h3>
+                            <p class="text-emerald-400 text-sm">${ch.subs} abonnés</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed">${ch.desc}</p>
+                    <div class="mt-6 inline-flex items-center gap-2 text-cyan-400 font-medium hover:gap-3 transition-all">
+                        Visiter la chaîne 
+                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                    </div>
+                </a>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        window.onload = loadChannels;
+    </script>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0a0f1c] border-t border-slate-700 py-10 mt-20">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-2xl flex items-center justify-center text-xl font-bold">NT</div>
+                    <div>
+                        <p class="font-semibold">NetAdmin Toolkit</p>
+                        <p class="text-xs text-slate-500">v2.7 • Made in Tanger 🇲🇦</p>
+                    </div>
+                </div>
+                <div class="text-slate-400 text-sm text-center md:text-right">
+                    © 2026 Ismail Bouzarhar. All rights reserved.<br>
+                    Student project in Systems and Networks
+                </div>
+                <a href="https://github.com/ismailbouzarhar70-sys/NetAdmin-Toolkit" target="_blank" class="text-2xl hover:text-cyan-400">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

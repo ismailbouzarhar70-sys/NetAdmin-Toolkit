@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cisco Engine - NetAdmin Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(148, 163, 184, 0.15); }
+        pre { background: #0f172a; border-radius: 16px; }
+
+        .template-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .template-card:hover { transform: translateY(-12px) scale(1.03); }
+        .sidebar-link { transition: all 0.3s ease; }
+        .sidebar-link:hover { transform: translateX(12px); background-color: rgba(34, 211, 238, 0.1) !important; }
+    </style>
+</head>
+<body class="bg-[#0a0f1c] text-slate-200 min-h-screen">
+
+    <div class="flex pt-24">
+        <aside class="w-72 bg-[#0f172a] border-r border-slate-700 h-[calc(100vh-6rem)] fixed hidden lg:block overflow-auto">
+            <div class="p-6 space-y-2">
+                <a href="index.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                    <i data-lucide="home" class="w-5 h-5"></i> Homepage
+                </a>
+                <a href="ip-manager.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                    <i data-lucide="network" class="w-5 h-5"></i> IP Manager
+                </a>
+                <a href="cisco-engine.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl bg-cyan-500/10 text-cyan-400 sidebar-link">
+                    <i data-lucide="cpu" class="w-5 h-5"></i> Cisco Engine
+                </a>
+                <a href="tools.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                    <i data-lucide="award" class="w-5 h-5"></i> Carrer Guide
+                </a>
+                <a href="learning.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                    <i data-lucide="play-circle" class="w-5 h-5"></i> Learning Resources
+                </a>
+                <a href="feedback.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                    <i data-lucide="message-square" class="w-5 h-5"></i> Feedback
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 lg:ml-72 p-8">
+            <h1 class="text-5xl font-bold mb-2">Cisco Engine v2.8</h1>
+            <p class="text-slate-400 mb-10">Intelligent and Interactive Cisco Configuration Generator</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="templates"></div>
+
+            <!-- Configuration Area -->
+            <div id="configArea" class="hidden mt-12">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-semibold text-cyan-400" id="configTitle"></h3>
+                    <div class="flex gap-3">
+                        <button onclick="copyConfig()" class="px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-2xl"> Copy</button>
+                        <button onclick="downloadConfig()" class="px-6 py-3 bg-cyan-500 hover:bg-cyan-600 rounded-2xl">⬇ Download</button>
+                    </div>
+                </div>
+                <pre><code id="configCode" class="language-cisco text-sm"></code></pre>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const templates = [
+            { id: "vlan", title: "VLAN & Trunk", icon: "tag", color: "emerald",
+                fields: [{name:"vlanId", label:"VLAN ID", type:"number", value:"10"}, {name:"vlanName", label:"Nom du VLAN", type:"text", value:"IT_Department"}] 
+            },
+            { id: "acl", title: "ACL - Access List", icon: "shield", color: "rose",
+                fields: [{name:"aclName", label:"Nom de l'ACL", type:"text", value:"BLOCK_WEB"}] 
+            },
+            { id: "ospf", title: "OSPF Configuration", icon: "globe", color: "amber",
+                fields: [{name:"processId", label:"Process ID", type:"number", value:"1"}, {name:"network", label:"Network", type:"text", value:"192.168.1.0"}] 
+            },
+            { id: "vpn", title: "VPN Site-to-Site", icon: "globe", color: "violet",
+                fields: [{name:"peerIp", label:"IP du Peer", type:"text", value:"203.0.113.1"}, {name:"preSharedKey", label:"Pre-Shared Key", type:"text", value:"SecretVPN123"}] 
+            },
+            { id: "dot1x", title: "802.1X Authentication", icon: "shield-check", color: "emerald",
+                fields: [{name:"interface", label:"Interface (ex: Gi0/5)", type:"text", value:"GigabitEthernet0/5"}] 
+            },
+            { id: "port-security", title: "Port Security", icon: "shield", color: "rose",
+                fields: [{name:"interface", label:"Interface", type:"text", value:"Gi0/1"}, {name:"maxMac", label:"Max MAC", type:"number", value:"2"}] 
+            },
+            { id: "hsrp", title: "HSRP Redundancy", icon: "zap", color: "amber",
+                fields: [{name:"group", label:"HSRP Group", type:"number", value:"1"}, {name:"virtualIp", label:"Virtual IP", type:"text", value:"192.168.1.1"}] 
+            },
+            { id: "username", title: "Local Username", icon: "user", color: "blue",
+                fields: [{name:"username", label:"Username", type:"text", value:"netadmin"}, {name:"password", label:"Password", type:"text", value:"Cisco123!"}] 
+            }
+        ];
+
+        function loadTemplates() {
+            const container = document.getElementById('templates');
+            container.innerHTML = templates.map(t => `
+                <div onclick="showForm('${t.id}')" 
+                     class="glass template-card rounded-3xl p-6 cursor-pointer">
+                    <div class="w-14 h-14 bg-gradient-to-br from-${t.color}-500 to-${t.color}-600 rounded-2xl flex items-center justify-center mb-5">
+                        <i data-lucide="${t.icon}" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="font-semibold text-xl">${t.title}</h3>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        let currentTemplate = null;
+
+        function showForm(id) {
+            currentTemplate = templates.find(t => t.id === id);
+            let html = `<h3 class="text-2xl font-semibold mb-6">${currentTemplate.title}</h3>`;
+
+            currentTemplate.fields.forEach(f => {
+                html += `
+                    <div class="mb-6">
+                        <label class="block text-sm text-slate-400 mb-2">${f.label}</label>
+                        <input type="${f.type}" id="${f.name}" value="${f.value}"
+                               class="w-full bg-slate-900 border border-slate-600 rounded-2xl px-5 py-4 focus:border-cyan-400">
+                    </div>`;
+            });
+
+            html += `<button onclick="generateConfig()" class="w-full bg-cyan-500 hover:bg-cyan-600 py-5 rounded-2xl font-semibold text-lg mt-4">Générer la Configuration</button>`;
+
+            document.getElementById('templates').innerHTML = html;
+        }
+
+        function generateConfig() {
+            let code = `! ==================== ${currentTemplate.title.toUpperCase()} ====================\n`;
+
+            switch(currentTemplate.id) {
+                case "vlan":
+                    const vId = document.getElementById('vlanId').value;
+                    const vName = document.getElementById('vlanName').value;
+                    code += `vlan ${vId}\n name ${vName}\n!\ninterface GigabitEthernet0/1\n switchport mode trunk\n switchport trunk allowed vlan ${vId}`;
+                    break;
+
+                case "acl":
+                    const aclName = document.getElementById('aclName').value;
+                    code += `ip access-list extended ${aclName}\n deny tcp any any eq 80\n deny tcp any any eq 443\n permit ip any any`;
+                    break;
+
+                case "ospf":
+                    const pid = document.getElementById('processId').value;
+                    const net = document.getElementById('network').value;
+                    code += `router ospf ${pid}\n network ${net} 0.0.0.255 area 0`;
+                    break;
+
+                case "vpn":
+                    const peer = document.getElementById('peerIp').value;
+                    const key = document.getElementById('preSharedKey').value;
+                    code += `crypto isakmp policy 10\n encr aes 256\n authentication pre-share\n!\ncrypto isakmp key ${key} address ${peer}`;
+                    break;
+
+                case "dot1x":
+                    const intf = document.getElementById('interface').value;
+                    code += `aaa new-model\n aaa authentication dot1x default group radius\n!\ninterface ${intf}\n authentication port-control auto\n dot1x pae authenticator`;
+                    break;
+
+                case "port-security":
+                    const psIntf = document.getElementById('interface').value;
+                    const max = document.getElementById('maxMac').value;
+                    code += `interface ${psIntf}\n switchport mode access\n switchport port-security\n switchport port-security maximum ${max}\n switchport port-security violation shutdown`;
+                    break;
+
+                case "hsrp":
+                    const group = document.getElementById('group').value;
+                    const vip = document.getElementById('virtualIp').value;
+                    code += `interface GigabitEthernet0/1\n standby ${group} ip ${vip}\n standby ${group} priority 110\n standby ${group} preempt`;
+                    break;
+
+                case "username":
+                    const user = document.getElementById('username').value;
+                    const pass = document.getElementById('password').value;
+                    code += `username ${user} privilege 15 secret ${pass}\nline vty 0 4\n login local`;
+                    break;
+            }
+
+            document.getElementById('configTitle').textContent = currentTemplate.title;
+            document.getElementById('configCode').textContent = code;
+            document.getElementById('configArea').classList.remove('hidden');
+            hljs.highlightAll();
+        }
+
+        function copyConfig() {
+            const text = document.getElementById('configCode').textContent;
+            navigator.clipboard.writeText(text).then(() => alert("✅ Configuration copiée !"));
+        }
+
+        function downloadConfig() {
+            const text = document.getElementById('configCode').textContent;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'cisco_config.txt';
+            a.click();
+        }
+
+        window.onload = loadTemplates;
+    </script>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0a0f1c] border-t border-slate-700 py-10 mt-20">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-2xl flex items-center justify-center text-xl font-bold">NT</div>
+                    <div>
+                        <p class="font-semibold">NetAdmin Toolkit</p>
+                        <p class="text-xs text-slate-500">v2.8 • Made in Tanger 🇲🇦</p>
+                    </div>
+                </div>
+                <div class="text-slate-400 text-sm text-center md:text-right">
+                    © 2026 Ismail Bouzarhar. All rights reserved.<br>
+                    Student project in Systems and Networks
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

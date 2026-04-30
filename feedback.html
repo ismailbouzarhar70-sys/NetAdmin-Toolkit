@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - NetAdmin Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(148, 163, 184, 0.15); }
+        
+        .animate-in { animation: fadeInUp 0.6s ease forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .option-btn {
+            transition: all 0.3s ease;
+        }
+        .option-btn:hover {
+            transform: translateX(12px);
+            background-color: rgba(34, 211, 238, 0.15);
+            border-color: #22d3ee;
+        }
+        .progress-bar {
+            transition: width 0.4s ease;
+        }
+    </style>
+</head>
+<body class="bg-[#0a0f1c] text-slate-200 min-h-screen">
+
+    <div class="flex pt-24">
+        <aside class="w-72 bg-[#0f172a] border-r border-slate-700 h-[calc(100vh-6rem)] fixed hidden lg:block overflow-auto">
+            <div class="p-6 space-y-2">
+                <a href="index.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                    <i data-lucide="home" class="w-5 h-5"></i> Homepage
+                </a>
+                <a href="ip-manager.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                    <i data-lucide="network" class="w-5 h-5"></i> IP Manager
+                </a>
+                <a href="cisco-engine.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                    <i data-lucide="cpu" class="w-5 h-5"></i> Cisco Engine
+                </a>
+                <a href="tools.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                    <i data-lucide="award" class="w-5 h-5"></i> Carrer Guide
+                </a>
+                <a href="learning.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                    <i data-lucide="play-circle" class="w-5 h-5"></i> Learning Resources
+                </a>
+                <a href="feedback.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl bg-cyan-500/10 text-cyan-400 sidebar-link">
+                    <i data-lucide="message-square" class="w-5 h-5"></i> Feedback
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 lg:ml-72 p-8">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-12">
+                    <h1 class="text-5xl font-bold mb-4 animate-in">Your Feedback Matters</h1>
+                    <p class="text-slate-400 text-xl">Help us improve NetAdmin Toolkit</p>
+                </div>
+
+                <!-- Progress -->
+                <div class="glass rounded-3xl p-8 mb-8">
+                    <div class="flex justify-between text-sm mb-3">
+                        <span id="progressText">Question <span id="currentQ">1</span>/6</span>
+                        <span class="text-cyan-400">Feedback</span>
+                    </div>
+                    <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                        <div id="progressBar" class="progress-bar h-full bg-gradient-to-r from-cyan-400 to-blue-500 w-1/6"></div>
+                    </div>
+                </div>
+
+                <div id="quizContainer" class="glass rounded-3xl p-10">
+                    <div id="questionContainer" class="min-h-[280px]"></div>
+                    
+                    <div class="flex justify-between mt-10">
+                        <button onclick="prevQuestion()" id="btnPrev"
+                                class="px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-2xl hidden">← Previous</button>
+                        <button onclick="nextQuestion()" id="btnNext"
+                                class="px-8 py-3 bg-cyan-500 hover:bg-cyan-600 rounded-2xl">Next →</button>
+                    </div>
+                </div>
+
+                <!-- Final Result -->
+                <div id="resultContainer" class="hidden glass rounded-3xl p-12 text-center">
+                    <i data-lucide="heart" class="w-24 h-24 text-pink-500 mx-auto mb-6"></i>
+                    <h2 class="text-4xl font-bold mb-4">Thank You!</h2>
+                    <div id="scoreDisplay" class="text-7xl font-bold text-cyan-400 mb-6"></div>
+                    <p id="feedbackMessage" class="text-lg text-slate-300 leading-relaxed max-w-md mx-auto"></p>
+                    
+                    <div class="mt-10">
+                        <textarea id="extraComment" rows="4" 
+                                  class="w-full bg-slate-900 border border-slate-600 rounded-2xl p-5 text-sm"
+                                  placeholder="Any additional comments? (optional)"></textarea>
+                    </div>
+                    
+                    <button onclick="submitFeedback()" 
+                            class="mt-8 px-10 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl font-semibold">
+                        Send My Feedback
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const questions = [
+            { q: "How do you find the overall design of the website?", options: ["Very beautiful and professional", "Good and modern", "Average", "Needs improvement"] },
+            { q: "Is the navigation and interface easy to use?", options: ["Very easy", "Easy", "Somewhat easy", "Difficult"] },
+            { q: "Are the tools (Cisco Engine, IP Manager, etc.) useful to you?", options: ["Very useful", "Useful", "Somewhat useful", "Not useful enough"] },
+            { q: "What do you think about the website's loading speed?", options: ["Very fast", "Fast", "Acceptable", "Slow"] },
+            { q: "Would you recommend NetAdmin Toolkit to your friends?", options: ["Yes, definitely", "Probably yes", "Maybe", "No"] },
+            { q: "What feature would you like to see added?", options: ["More Cisco templates", "Advanced VLSM calculator", "Packet Tracer simulator", "Other (please specify)"] }
+        ];
+
+        let currentQuestion = 0;
+        let answers = [];
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            let html = `<h3 class="text-2xl font-semibold mb-8 leading-tight">${q.q}</h3><div class="space-y-4">`;
+
+            q.options.forEach((opt, i) => {
+                html += `
+                    <button onclick="selectAnswer(${i})" 
+                            class="option-btn w-full text-left px-7 py-5 rounded-2xl border border-slate-600 hover:border-cyan-400 text-lg">
+                        ${opt}
+                    </button>`;
+            });
+            html += `</div>`;
+
+            document.getElementById('questionContainer').innerHTML = html;
+            document.getElementById('currentQ').textContent = currentQuestion + 1;
+            document.getElementById('progressBar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+            document.getElementById('btnPrev').classList.toggle('hidden', currentQuestion === 0);
+        }
+
+        function selectAnswer(index) {
+            answers[currentQuestion] = index;
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function showResults() {
+            let positive = answers.filter(a => a === 0 || a === 1).length;
+            let score = Math.round((positive / questions.length) * 100);
+
+            let message = "";
+            if (score >= 85) message = "You're a very satisfied user! Thank you so much for your support ❤️";
+            else if (score >= 65) message = "Thank you for your positive feedback. We'll keep improving the tool.";
+            else message = "Thank you for your honesty. Your comments will help us get better.";
+
+            document.getElementById('quizContainer').classList.add('hidden');
+            document.getElementById('resultContainer').classList.remove('hidden');
+            document.getElementById('scoreDisplay').textContent = score + "%";
+            document.getElementById('feedbackMessage').textContent = message;
+
+            lucide.createIcons();
+        }
+
+        function submitFeedback() {
+            const comment = document.getElementById('extraComment').value.trim();
+            alert("✅ Thank you! Your feedback has been received.\n\n" + (comment ? "Comment: " + comment : ""));
+        }
+
+        window.onload = () => {
+            lucide.createIcons();
+            loadQuestion();
+        };
+    </script>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0a0f1c] border-t border-slate-700 py-10 mt-20">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-2xl flex items-center justify-center text-xl font-bold">NT</div>
+                    <div>
+                        <p class="font-semibold">NetAdmin Toolkit</p>
+                        <p class="text-xs text-slate-500">v2.8 • Made in Tanger 🇲🇦</p>
+                    </div>
+                </div>
+                <div class="text-slate-400 text-sm text-center md:text-right">
+                    © 2026 Ismail Bouzarhar. All rights reserved.<br>
+                    Student project in Systems and Networks
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
