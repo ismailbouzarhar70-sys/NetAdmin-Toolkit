@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" class="dark">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,112 +11,88 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
         body { font-family: 'Inter', system-ui, sans-serif; }
         .title { font-family: 'Space Grotesk', sans-serif; }
-        .glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(148, 163, 184, 0.15); }
-        .cyber-glow { text-shadow: 0 0 20px rgb(34 211 238); }
-
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes glow { 0%,100% { text-shadow: 0 0 10px rgb(34 211 238); } 50% { text-shadow: 0 0 30px rgb(34 211 238); } }
-
-        .animate-in { animation: fadeInUp 0.8s ease forwards; }
-        .card-hover:hover { transform: translateY(-15px) scale(1.04); }
-        .sidebar-link { transition: all 0.3s ease; }
-        .sidebar-link:hover { transform: translateX(12px); background-color: rgba(34, 211, 238, 0.1) !important; }
-        .glow-title { animation: glow 3s ease-in-out infinite; }
+        .glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(148, 163, 184, 0.15); }
+        .card-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { transform: translateY(-12px); box-shadow: 0 30px 40px -15px rgb(34 211 238 / 0.2); }
     </style>
 </head>
 <body class="bg-[#0a0f1c] text-slate-200 min-h-screen">
 
-    <header class="fixed top-0 left-0 right-0 bg-[#0f172a]/95 border-b border-cyan-500/30 z-50 backdrop-blur-lg">
-        <div class="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-3xl flex items-center justify-center text-3xl font-bold">NT</div>
-                <div>
-                    <h1 class="title text-3xl font-bold tracking-tighter cyber-glow">NetAdmin Toolkit</h1>
-                    <p class="text-cyan-400 text-sm -mt-1">Professional Network Engineering Suite</p>
+    <div class="flex h-screen">
+        <!-- SIDEBAR -->
+        <aside class="w-72 bg-[#0f172a] border-r border-slate-700 flex flex-col">
+            <div class="p-6 border-b border-slate-700">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-600 rounded-2xl flex items-center justify-center font-bold text-xl">NT</div>
+                    <div>
+                        <h1 class="title text-2xl font-bold">NetAdmin Toolkit</h1>
+                        <p class="text-xs text-cyan-400">Professional Network Suite</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
 
-    <div class="flex pt-24">
-        <aside class="w-72 bg-[#0f172a] border-r border-slate-700 h-[calc(100vh-6rem)] fixed hidden lg:block overflow-auto">
-            <div class="p-6 space-y-2">
-                <a href="index.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl bg-cyan-500/10 text-cyan-400 sidebar-link">
+            <div class="p-6 space-y-2 flex-1">
+                <a href="index.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl bg-cyan-500/10 text-cyan-400">
                     <i data-lucide="home" class="w-5 h-5"></i> Homepage
                 </a>
-                <a href="ip-manager.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                <a href="ip-manager.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800">
                     <i data-lucide="network" class="w-5 h-5"></i> IP Manager
                 </a>
-                <a href="cisco-engine.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                <a href="cisco-engine.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800">
                     <i data-lucide="cpu" class="w-5 h-5"></i> Cisco Engine
                 </a>
-                <a href="tools.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
-                    <i data-lucide="toolbox" class="w-5 h-5"></i> Career Guide
+                <a href="tools.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800">
+                    <i data-lucide="award" class="w-5 h-5"></i> Career Guide
                 </a>
-                <a href="learning.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                <a href="learning.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800">
                     <i data-lucide="play-circle" class="w-5 h-5"></i> Learning Resources
                 </a>
-                <a href="feedback.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
+                <a href="feedback.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800">
                     <i data-lucide="message-square" class="w-5 h-5"></i> Feedback
                 </a>
             </div>
         </aside>
 
-        <main class="flex-1 lg:ml-72 p-8">
-            <div class="max-w-6xl mx-auto text-center">
-                <h2 class="title text-6xl font-bold tracking-tighter mb-6 glow-title animate-in">NetAdmin Toolkit</h2>
-                <p class="text-2xl text-slate-400 mb-16 animate-in">Your Comprehensive Suite for Network Administration</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="cards"></div>
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 p-10 overflow-auto">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="title text-6xl font-bold mb-3">NetAdmin Toolkit</h1>
+                <p class="text-2xl text-slate-400 mb-12">Your Comprehensive Suite for Network Administration</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- IP Manager -->
+                    <a href="ip-manager.html" class="glass card-hover rounded-3xl p-8 group">
+                        <div class="w-16 h-16 bg-cyan-500 rounded-2xl flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform">
+                            <i data-lucide="network" class="w-9 h-9 text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-2">IP Manager</h3>
+                        <p class="text-slate-400">Subnetting, VLSM, IPv4/IPv6 Calculator</p>
+                    </a>
+
+                    <!-- Cisco Engine -->
+                    <a href="cisco-engine.html" class="glass card-hover rounded-3xl p-8 group">
+                        <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform">
+                            <i data-lucide="cpu" class="w-9 h-9 text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-2">Cisco Engine</h3>
+                        <p class="text-slate-400">Professional Cisco Configuration Generator</p>
+                    </a>
+
+                    <!-- Career Guide -->
+                    <a href="tools.html" class="glass card-hover rounded-3xl p-8 group">
+                        <div class="w-16 h-16 bg-violet-600 rounded-2xl flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform">
+                            <i data-lucide="award" class="w-9 h-9 text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-2">Career Guide</h3>
+                        <p class="text-slate-400">Become a Network & Systems Engineer</p>
+                    </a>
+                </div>
             </div>
         </main>
     </div>
 
     <script>
         lucide.createIcons();
-
-        const cards = [
-            {title: "IP Manager", icon: "network", color: "cyan", desc: "Subnetting, VLSM, IPv4/IPv6", link: "ip-manager.html"},
-            {title: "Cisco Engine", icon: "cpu", color: "blue", desc: "Cisco Configuration Generator", link: "cisco-engine.html"},
-            {title: "Admin Tools", icon: "toolbox", color: "violet", desc: "Useful Tools et Commands", link: "tools.html"}
-        ];
-
-        function createCards() {
-            const container = document.getElementById('cards');
-            container.innerHTML = cards.map((c, i) => `
-                <a href="${c.link}" class="glass rounded-3xl p-8 card-hover animate-in" style="animation-delay: ${i*150}ms">
-                    <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-${c.color}-500 to-${c.color}-600 rounded-2xl flex items-center justify-center">
-                        <i data-lucide="${c.icon}" class="w-10 h-10 text-white"></i>
-                    </div>
-                    <h3 class="text-2xl font-semibold mb-3">${c.title}</h3>
-                    <p class="text-slate-400">${c.desc}</p>
-                </a>
-            `).join('');
-            lucide.createIcons();
-        }
-
-        window.onload = createCards;
     </script>
-
-    <footer class="bg-[#0a0f1c] border-t border-slate-700 py-10 mt-20">
-        <div class="max-w-7xl mx-auto px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-2xl flex items-center justify-center text-xl font-bold">NT</div>
-                    <div>
-                        <p class="font-semibold">NetAdmin Toolkit</p>
-                        <p class="text-xs text-slate-500">v2.7 • Made in Tanger 🇲🇦</p>
-                    </div>
-                </div>
-                <div class="text-slate-400 text-sm text-center md:text-right">
-                    © 2026 Ismail Bouzarhar. All rights reserved.<br>
-                    Student project in Systems and Networks
-                </div>
-                <a href="https://github.com/ismailbouzarhar70-sys/NetAdmin-Toolkit" target="_blank" class="text-2xl hover:text-cyan-400">
-                    <i class="fa-brands fa-github"></i>
-                </a>
-            </div>
-        </div>
-    </footer>
 </body>
 </html>
