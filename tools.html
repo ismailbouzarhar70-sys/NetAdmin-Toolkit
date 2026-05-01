@@ -23,28 +23,50 @@
 <body class="bg-[#0a0f1c] text-slate-200 min-h-screen">
 
     <div class="flex pt-24">
-        <aside class="w-72 bg-[#0f172a] border-r border-slate-700 h-[calc(100vh-6rem)] fixed hidden lg:block overflow-auto">
-            <div class="p-6 space-y-2">
-                <a href="index.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
-                    <i data-lucide="home" class="w-5 h-5"></i> Homepage
-                </a>
-                <a href="ip-manager.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
-                    <i data-lucide="network" class="w-5 h-5"></i> IP Manager
-                </a>
-                <a href="cisco-engine.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
-                    <i data-lucide="cpu" class="w-5 h-5"></i> Cisco Engine
-                </a>
-                <a href="tools.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl bg-cyan-500/10 text-cyan-400 sidebar-link">
-                    <i data-lucide="award" class="w-5 h-5"></i> Career Guide
-                </a>
-                <a href="learning.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
-                    <i data-lucide="play-circle" class="w-5 h-5"></i> Learning Resources
-                </a>
-                <a href="feedback.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800 sidebar-link">
-                    <i data-lucide="message-square" class="w-5 h-5"></i> Feedback
-                </a>
-            </div>
-        </aside>
+        <!-- SIDEBAR + MENU MOBILE -->
+<aside class="w-72 bg-[#0f172a] border-r border-slate-700 h-screen fixed hidden lg:block overflow-auto">
+    <div class="p-6 space-y-2">
+        <!-- Tes liens ici (comme avant) -->
+        <a href="index.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl bg-cyan-500/10 text-cyan-400">
+            <i data-lucide="home" class="w-5 h-5"></i> Homepage
+        </a>
+        <a href="ip-manager.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800">
+            <i data-lucide="network" class="w-5 h-5"></i> IP Manager
+        </a>
+        <a href="cisco-engine.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800">
+            <i data-lucide="cpu" class="w-5 h-5"></i> Cisco Engine
+        </a>
+        <a href="tools.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800">
+            <i data-lucide="award" class="w-5 h-5"></i> Career Guide
+        </a>
+        <a href="learning.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800">
+            <i data-lucide="play-circle" class="w-5 h-5"></i> Learning Resources
+        </a>
+        <a href="feedback.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl hover:bg-slate-800">
+            <i data-lucide="message-square" class="w-5 h-5"></i> Feedback
+        </a>
+    </div>
+</aside>
+
+<!-- Bouton Menu Mobile -->
+<button onclick="toggleMobileMenu()" 
+        class="lg:hidden fixed top-6 left-6 z-50 p-4 bg-[#0f172a] border border-slate-700 rounded-2xl text-white">
+    <i data-lucide="menu" class="w-6 h-6"></i>
+</button>
+
+<!-- Menu Mobile Overlay -->
+<div id="mobileMenu" class="hidden fixed inset-0 bg-black/90 z-50 lg:hidden flex">
+    <div class="w-72 bg-[#0f172a] h-full overflow-auto p-6">
+        <!-- Copie les mêmes liens que dans la sidebar -->
+        <div class="space-y-2">
+            <a href="index.html" class="flex items-center gap-3 px-5 py-4 rounded-2xl bg-cyan-500/10 text-cyan-400">
+                <i data-lucide="home" class="w-5 h-5"></i> Homepage
+            </a>
+            <!-- ... tous les autres liens ... -->
+        </div>
+        <button onclick="toggleMobileMenu()" class="mt-8 text-cyan-400">Fermer ×</button>
+    </div>
+</div>
 
         <main class="flex-1 lg:ml-72 p-8">
             <h1 class="text-5xl font-bold mb-4 animate-in">Become a Systems and Network Engineer</h1>
@@ -154,5 +176,11 @@
             </div>
         </div>
     </footer>
+    <script>
+    function toggleMobileMenu() {
+        document.getElementById('mobileMenu').classList.toggle('hidden');
+    }
+    lucide.createIcons();
+</script>
 </body>
 </html>
